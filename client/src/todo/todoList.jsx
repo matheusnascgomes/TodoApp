@@ -20,9 +20,10 @@ export default props => {
 
   return(
     <table className="table">
-      <thead>
+      <thead className="taskList">
         <tr>
-          <td>Descrição</td>
+          <th>Descrição</th>
+          <th className="tableActions">Ações</th>
         </tr>
       </thead>
       <tbody>
