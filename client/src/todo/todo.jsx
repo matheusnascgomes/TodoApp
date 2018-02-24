@@ -19,6 +19,8 @@ export default class Todo extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleAdd = this.handleAdd.bind(this)
+    this.handleDone = this.handleDone.bind(this)
+    this.handleUndo = this.handleUndo.bind(this)
     this.handleRemove = this.handleRemove.bind(this)
 
     this.refresh();
@@ -34,7 +36,18 @@ export default class Todo extends Component {
 
   handleAdd() {
     const description = this.state.description
-    axios.post(URL, {description}).then(resp => this.refresh())
+    axios.post(URL, {description})
+      .then(resp => this.refresh())
+  }
+
+  handleDone(todo){
+    axios.put(`${URL}/${todo._id}`,{ ...todo, done:true })
+      .then(resp => this.refresh())
+  }
+
+  handleUndo(todo){
+    axios.put(`${URL}/${todo._id}`,{ ...todo, done:false })
+      .then(resp => this.refresh())
   }
 
   handleRemove(todo){
@@ -51,6 +64,8 @@ export default class Todo extends Component {
           handleAdd={this.handleAdd} />
         <TodoList
           list={this.state.list}
+          handleDone={this.handleDone}
+          handleUndo={this.handleUndo}
           handleRemove={this.handleRemove}
           />
       </div>
